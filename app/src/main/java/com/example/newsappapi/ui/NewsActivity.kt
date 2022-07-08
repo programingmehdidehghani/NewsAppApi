@@ -5,10 +5,13 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsappapi.R
+import com.example.newsappapi.adapters.NewsAdapter
 import com.example.newsappapi.db.ArticleDatabase
 import com.example.newsappapi.repository.NewsRepository
 import kotlinx.android.synthetic.main.activity_news.*
+import kotlinx.android.synthetic.main.fragment_breaking_news.*
 
 class NewsActivity : AppCompatActivity() {
 
@@ -23,4 +26,6 @@ class NewsActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
     }
+
+
 }
