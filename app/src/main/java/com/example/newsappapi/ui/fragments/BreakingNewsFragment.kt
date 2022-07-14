@@ -26,7 +26,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val newsRepository = NewsRepository(ArticleDatabase(view.context))
+        val newsRepository = NewsRepository(ArticleDatabase(requireActivity()))
         val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
         setupRecyclerView()
