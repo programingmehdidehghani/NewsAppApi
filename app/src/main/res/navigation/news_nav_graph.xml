@@ -9,7 +9,7 @@
         android:name="com.example.newsappapi.ui.fragments.BreakingNewsFragment"
         android:label="BreakingNewsFragment" >
         <action
-            android:id="@+id/action_breakingNewsFragment2_to_articleFragment"
+            android:id="@+id/action_breakingNewsFragment_to_articleFragment"
             app:destination="@id/articleFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -21,7 +21,7 @@
         android:name="com.example.newsappapi.ui.fragments.SavedNewsFragment"
         android:label="SavedNewsFragment" >
         <action
-            android:id="@+id/action_savedNewsFragment2_to_articleFragment"
+            android:id="@+id/action_savedNewsFragment_to_articleFragment"
             app:destination="@id/articleFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -33,15 +33,19 @@
         android:name="com.example.newsappapi.ui.fragments.SearchNewsFragment"
         android:label="SearchNewsFragment" >
         <action
-            android:id="@+id/action_searchNewsFragment2_to_articleFragment"
+            android:id="@+id/action_searchNewsFragment_to_articleFragment"
             app:destination="@id/articleFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
         android:name="com.example.newsappapi.ui.fragments.ArticleFragment"
-        android:label="ArticleFragment" />
+        android:label="ArticleFragment" >
+        <argument
+            android:name="article"
+            app:argType="com.example.newsappapi.models.Article" />
+    </fragment>
 </navigation>
