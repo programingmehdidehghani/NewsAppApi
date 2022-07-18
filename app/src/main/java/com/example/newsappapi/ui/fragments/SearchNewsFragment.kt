@@ -39,17 +39,18 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         setupRecyclerView()
 
         var job : Job? = null
-        etSearch.addTextChangedListener {editable->
+        etSearch.addTextChangedListener{editable->
             job?.cancel()
             job = MainScope().launch {
                 delay(SEARCH_NEWS_TIME_DELAY)
-                editable.let {
-                     if (editable.toString().isEmpty()){
-                         viewModel.searchNews(editable.toString())
-                     }
+                editable?.let {
+                    if (editable.toString().isNotEmpty()){
+                        viewModel.searchNews(editable.toString())
+                    }
                 }
             }
         }
+
 
         viewModel.searchNews.observe(viewLifecycleOwner , Observer { response ->
             when(response){
