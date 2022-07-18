@@ -3,6 +3,7 @@ package com.example.newsappapi.db
 import android.content.Context
 import androidx.room.*
 import com.example.newsappapi.models.Article
+import androidx.room.TypeConverters
 
 
 @Database(
