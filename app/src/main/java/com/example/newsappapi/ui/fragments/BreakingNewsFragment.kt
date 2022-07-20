@@ -1,16 +1,17 @@
 package com.example.newsappapi.ui.fragments
 
+import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AbsListView
-import androidx.core.view.setPadding
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsappapi.NewsApplication
 import com.example.newsappapi.R
 import com.example.newsappapi.adapters.NewsAdapter
 import com.example.newsappapi.db.ArticleDatabase
@@ -21,17 +22,20 @@ import com.example.newsappapi.utils.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.newsappapi.utils.Resource
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 
+
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     private lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
     val TAG = "BreakingNewsFragment"
+    var appCtx:NewsApplication? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val newsRepository = NewsRepository(ArticleDatabase(requireActivity()))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
+        appCtx = activity?.application as NewsApplication
+        val viewModelProviderFactory = NewsViewModelProviderFactory(appCtx!!, newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
         setupRecyclerView()
 
@@ -61,8 +65,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                  is Resource.Error -> {
                      hideProgressBar()
                      response.message?.let { message ->
-                         Log.e(TAG, "An error occured: $message")
-
+                         Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG).show()
                      }
                  }
                  is Resource.Loading -> {

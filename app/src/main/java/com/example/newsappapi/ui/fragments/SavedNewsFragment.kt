@@ -1,5 +1,6 @@
 package com.example.newsappapi.ui.fragments
 
+import android.app.Application
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -9,26 +10,28 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsappapi.NewsApplication
 import com.example.newsappapi.R
 import com.example.newsappapi.adapters.NewsAdapter
 import com.example.newsappapi.db.ArticleDatabase
 import com.example.newsappapi.repository.NewsRepository
-import com.example.newsappapi.ui.NewsActivity
 import com.example.newsappapi.ui.NewsViewModel
 import com.example.newsappapi.ui.NewsViewModelProviderFactory
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 
 class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter : NewsAdapter
+    var appCtx:NewsApplication? = null
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val newsRepository = NewsRepository(ArticleDatabase(requireActivity()))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
+        appCtx = activity?.application as NewsApplication
+        val viewModelProviderFactory = NewsViewModelProviderFactory(appCtx!!, newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
         setupRecyclerView()
         newsAdapter.setOnItemClickListener {

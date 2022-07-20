@@ -1,9 +1,10 @@
 package com.example.newsappapi.ui.fragments
 
+import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AbsListView
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -11,17 +12,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsappapi.NewsApplication
 import com.example.newsappapi.R
 import com.example.newsappapi.adapters.NewsAdapter
 import com.example.newsappapi.db.ArticleDatabase
 import com.example.newsappapi.repository.NewsRepository
-import com.example.newsappapi.ui.NewsActivity
 import com.example.newsappapi.ui.NewsViewModel
 import com.example.newsappapi.ui.NewsViewModelProviderFactory
 import com.example.newsappapi.utils.Constants
 import com.example.newsappapi.utils.Constants.Companion.SEARCH_NEWS_TIME_DELAY
 import com.example.newsappapi.utils.Resource
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.paginationProgressBar
 import kotlinx.coroutines.Job
@@ -34,13 +34,15 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
     lateinit var viewModel: NewsViewModel
     val TAG = "SearchNewsFragment"
     lateinit var newsAdapter: NewsAdapter
+    var appCtx:NewsApplication? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //viewModel = (activity as NewsActivity).viewModel
+        appCtx = activity?.application as NewsApplication
         val newsRepository = NewsRepository(ArticleDatabase(requireActivity()))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
+        val viewModelProviderFactory = NewsViewModelProviderFactory(appCtx!!, newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
         setupRecyclerView()
 
@@ -84,8 +86,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Log.e(TAG, "An error occured: $message")
-
+                        Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG).show()
                     }
                 }
                 is Resource.Loading -> {
