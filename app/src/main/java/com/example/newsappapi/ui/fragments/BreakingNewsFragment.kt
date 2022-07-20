@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
+import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -52,6 +53,9 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                          newsAdapter.differ.submitList(newsResponse.articles.toList())
                          val totalPages =newsResponse.totalResults / QUERY_PAGE_SIZE + 2
                          isLastPage = viewModel.breakingNewsPage == totalPages
+                         if(isLastPage){
+                            rvBreakingNews.setPadding(0,0,0,0)
+                         }
                      }
                  }
                  is Resource.Error -> {
