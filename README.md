@@ -7,4 +7,4 @@
 + navigation(Fragment)
 + DiffUtil in RecyclerView
 
-![newApp](https://user-images.githubusercontent.com/74426462/198578060-c4cc98be-7de1-4dd0-8d7e-b3ee131475e1.png)
+![Screenshot_20221111-152251_NewsAppApi](https://user-images.githubusercontent.com/74426462/201338884-f85ebac8-ba50-4dc1-a179-7da90f63b287.jpg)
