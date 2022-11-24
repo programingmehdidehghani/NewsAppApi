@@ -9,14 +9,13 @@ import android.net.NetworkCapabilities.*
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Query
 import com.example.newsappapi.NewsApplication
 import com.example.newsappapi.models.Article
 import com.example.newsappapi.models.NewsResponse
 import com.example.newsappapi.repository.NewsRepository
 import com.example.newsappapi.utils.Resource
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.Response
